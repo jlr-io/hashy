@@ -9,8 +9,8 @@
   </div>
   
     <div class="flex justify-center">
-        <button class="btn-primary" on:click={file.select}>Browse</button>
-        <button class="btn-primary disabled:btn-primary-disabled mx-3" disabled='{!$file}' on:click={file.reset}>Clear</button>
+        <button class="btn mx-3" on:click={file.select}>Browse</button>
+        <button class="btn mx-3" disabled='{!$file}' on:click={file.reset}>Clear</button>
     </div>
 
     <div>

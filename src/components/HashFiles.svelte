@@ -10,8 +10,8 @@
   </div>
 
   <div class="flex justify-center">
-    <button class="btn" disabled='{!$file}' on:click={hash.hash}>Hash File</button>
-    <button class="btn" disabled='{!$hash}' on:click={hash.reset}>Clear</button>
+    <button class="btn mx-3" disabled='{!$file}' on:click={hash.hash}>Hash File</button>
+    <button class="btn mx-3" disabled='{!$hash}' on:click={hash.reset}>Clear</button>
   </div>
 
   <div>

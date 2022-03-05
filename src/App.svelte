@@ -4,10 +4,12 @@
   import SelectFiles from "./components/SelectFiles.svelte";
   import SelectAlgorithms from "./components/SelectAlgorithms.svelte";
   import HashFiles from "./components/HashFiles.svelte";
+  import ThemeChanger from "./components/ThemeChanger.svelte";
 </script>
 
 <main>
   <div>
+    <ThemeChanger />
     <SelectFiles />
     <SelectAlgorithms />
     <HashFiles />
