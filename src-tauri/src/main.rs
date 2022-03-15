@@ -2,32 +2,56 @@
   all(not(debug_assertions), target_os = "windows"),
   windows_subsystem = "windows"
 )]
+use state::Storage;
+use std::collections::HashMap;
+use std::sync::Mutex;
+use tauri::{Manager, Window};
+// struct FileStruct {
+//   bytes: Vec<u8>,
+//   hash: String,
+// }
+
+static FILE_MAP: Storage<Mutex<HashMap<String, Vec<u8>>>> = Storage::new();
+static MAIN_WINDOW: Storage<Window> = Storage::new();
 
 fn main() {
   tauri::Builder::default()
+    .setup(|app| {
+      // Store file map.
+      let initial_map = HashMap::new();
+      FILE_MAP.set(Mutex::new(initial_map));
+
+      // Store main window.
+      let main_window = app.get_window("main").unwrap();
+      MAIN_WINDOW.set(main_window);
+
+      Ok(())
+    })
     // this is where you pass in your custom commands.
     .invoke_handler(tauri::generate_handler![hash_command])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
 
-use std::{fs, io};
-use hex::encode_upper;
+// argon2?
+use blake2::{Blake2b512, Blake2s256};
 use digest::Digest;
-use md5::{Md5};
-use sha1::{Sha1};
+use hex::encode_upper;
+use md5::Md5;
+use ripemd::{Ripemd160, Ripemd320};
+use sha1::Sha1;
 use sha2::{Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
-use ripemd::{Ripemd160, Ripemd320};
-use blake2::{Blake2b512, Blake2s256};
-use whirlpool::{Whirlpool};
+use std::{fs, io};
+// use blake3;
+use fsb::{Fsb160, Fsb224, Fsb256, Fsb384, Fsb512};
+use gost94::Gost94CryptoPro;
+use groestl::Groestl256;
 use shabal::{Shabal192, Shabal224, Shabal256, Shabal384, Shabal512};
+use sm3::Sm3;
 use streebog::*;
 use tiger::Tiger;
-use sm3::{Sm3};
-use groestl::{Groestl256};
-use gost94::{Gost94CryptoPro};
-use fsb::{Fsb160, Fsb224, Fsb256, Fsb384, Fsb512};
+use whirlpool::Whirlpool;
 
 #[tauri::command(async)]
 async fn hash_command(path: String, algo: String) -> String {
@@ -55,7 +79,7 @@ async fn hash_command(path: String, algo: String) -> String {
     "STREEBOG512" => return hash_file(path, Streebog512::new()),
     "TIGER" => return hash_file(path, Tiger::default()),
     "SM3" => return hash_file(path, Sm3::default()),
-    "GROESTL" => return hash_file(path, Groestl256::default()), 
+    "GROESTL" => return hash_file(path, Groestl256::default()),
     "GOST" => return hash_file(path, Gost94CryptoPro::default()),
     "FSB-160" => return hash_file(path, Fsb160::default()),
     "FSB-224" => return hash_file(path, Fsb224::default()),
@@ -66,12 +90,72 @@ async fn hash_command(path: String, algo: String) -> String {
   }
 }
 
+#[derive(Clone, serde::Serialize)]
+struct Payload {
+  message: String,
+}
+
+fn emit_event(event_name: &str, message: &str) {
+  // app instead?
+  let main_window = MAIN_WINDOW.get();
+  main_window
+    .emit_all(
+      event_name,
+      Payload {
+        message: message.into(),
+      },
+    )
+    .unwrap();
+}
+
+fn read_file(path: &str) -> Vec<u8> {
+  emit_event("test", "Reading file..");
+  println!("here");
+  // let mut map = FILE_MAP.get().lock().unwrap();
+  let mut reader = fs::File::open(path).unwrap();
+  let mut writer: Vec<u8> = vec![];
+  io::copy(&mut reader, &mut writer).unwrap();
+  // let bytes = writer.as_slice();
+  // map.insert(path.into(), bytes.to_vec());
+  println!("{:?}", writer);
+  return writer;
+}
+
+fn set_bytes(path: &str, bytes: &Vec<u8>) {
+  let mut map = FILE_MAP.get().try_lock().unwrap();
+  map.insert(path.into(), bytes.to_vec().into());
+}
+
+fn get_bytes(path: String) -> Vec<u8> {
+  let map = FILE_MAP.get().lock().unwrap();
+  let value = map.get(&path);
+  
+  // TODO: modify hashmap to use metadata w/ path
+  // will not re-read if file has been modified after it has been read once (same path).
+  match value {
+    Some(value) => {
+      emit_event("test", "Retreived file cache.");
+      let bytes = value.to_vec();
+      return bytes;
+    }
+    None => {
+      let bytes = read_file(&path);
+      emit_event("test", "done reading");
+      // needed to get around lock above.
+      drop(map);
+      set_bytes(&path, &bytes);
+      return bytes;
+    }
+  }
+}
+
 fn hash_file<T>(path: String, mut hasher: T) -> String
 where
   T: Digest,
-  T: io::Write, 
+  T: io::Write,
 {
-    let mut input = fs::File::open(path).unwrap();
-    io::copy(&mut input, &mut hasher).unwrap();
-    return encode_upper(hasher.finalize());
+  // TODO: cache hash
+  let bytes = get_bytes(path);
+  hasher.update(bytes);
+  return encode_upper(hasher.finalize());
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { hash } from '../stores/hashes';
-  import { file } from '../stores/files';
+  import { hash } from '../stores/hash';
+  import { file } from '../stores/file';
 </script>
 
 <div class="container">

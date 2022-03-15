@@ -36,6 +36,8 @@ groestl = "0.10.1"
 gost94 = "0.10.1"
 fsb = "0.1.1"
 
+state = "0.5.2"
+
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL

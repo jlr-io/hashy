@@ -1,10 +1,10 @@
-import { derived, get, writable } from 'svelte/store';
-import { dialog } from "@tauri-apps/api";
+import { writable } from 'svelte/store';
+import { dialog, invoke } from "@tauri-apps/api";
 
 export type FileType = string | string[]
 
 function fileSelection() {
-  const { subscribe, set } = writable<FileType>(null);
+  const { subscribe, set } = writable<FileType>();
 
   return {
 		subscribe,

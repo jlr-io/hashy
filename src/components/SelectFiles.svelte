@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { file } from '../stores/files';
+  import { file } from '../stores/file';
 </script>
 
 <div class="container">
@@ -20,7 +20,6 @@
         Select a file.
       {/if}
     </div>
-
 </div>
 
 
