@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api";
 import { fileStore } from './file.store';
 import { algorithmStore } from './algorithm.store';
 
-type FileHash = {
+export interface FileHash {
   path: String,
   hashes: Hash[]
 };
@@ -14,13 +14,13 @@ type Hash = {
 }
 
 function hashFiles() {
-  const { subscribe, set } = writable<FileHash[]>();
+  const { subscribe, set } = writable<FileHash>();
 
   return {
     subscribe,
     reset: () => set(null),
     set: (hash) => set(hash),
-    hashCommand: async () => set(await invoke<FileHash[]>("hash_command", { paths: get(fileStore), algos: get(algorithmStore) }))
+    hashFiles: async () => set(await invoke<FileHash>("hash_files", { path: get(fileStore), algos: get(algorithmStore) }))
   }
 }
 

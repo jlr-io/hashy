@@ -5,20 +5,22 @@
     message: String;
   };
 
-  let eventMessage;
+  // let eventMessage;
+  let eventMessages = [];
 
-  // listen to the `click` event and get a function to remove the event listener
-  // there's also a `once` function that subscribes to an event and automatically unsubscribes the listener on the first event
-  listen("test", (event: Event<Payload>) => {
-    // event.event is the event name (useful if you want to use a single callback fn for multiple event types)
-    // event.payload is the payload object
-    eventMessage = event.payload.message;
+  listen("app", (event: Event<Payload>) => {
+    eventMessages = [...eventMessages, `app: ${event.payload.message}`];
+  });
+
+  listen("file", (event: Event<Payload>) => {
+    eventMessages = [...eventMessages, `file: ${event.payload.message}`];
+  });
+
+  listen("hash", (event: Event<Payload>) => {
+    eventMessages = [...eventMessages, `hash: ${event.payload.message}`];
   });
 
   import { invoke } from "@tauri-apps/api";
-  
-  
-
   let show: Boolean = false;
 
   async function windowEventTest() {
@@ -33,7 +35,14 @@
 
 <div>
 
-  EVENT: {eventMessage}
+  <button class="btn mx-3" on:click={() => eventMessages = []}>CLEAR EVENTS</button>
+
+  EVENT LOG:
+  <ol>
+    {#each eventMessages as event}
+    <li>{event}</li>
+    {/each}
+  </ol>
   
   {#if show}
     Show me
