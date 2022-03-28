@@ -3,9 +3,18 @@ use std::collections::HashMap;
 pub type Path = String;
 pub type Bytes = Vec<u8>;
 
+#[derive(Clone, serde::Serialize)]
+pub struct FileMetaData {
+    name: String,
+    path: String,
+    file_type: String,
+    size: String,
+    last_modified: String,
+}
+
 use std::{fs, io};
 
-pub fn read_file(path: &String) -> Bytes {
+pub fn read_file(path: &String) -> Vec<u8> {
     let mut reader = fs::File::open(path).unwrap();
     let mut bytes: Bytes = vec![];
     io::copy(&mut reader, &mut bytes).unwrap();
@@ -42,6 +51,34 @@ where
         };
         bytes
     }
+}
+
+#[tauri::command]
+pub fn get_file_metadata(path: String) -> FileMetaData {
+    let metadata = fs::metadata(&path).expect("unable to read file");
+
+    let name = String::from(path.split("/").last().unwrap());
+    let file_type = if metadata.is_file() { String::from("file") } else { String::from("dir")};
+    let last_modified = readable_time(metadata.modified().unwrap());
+    let kb = metadata.len() / 1000;
+    // let size = kb.to_string().push_str("KB");   
+    let size = format!("{}KB", kb);
+    FileMetaData {
+        name,
+        path, 
+        file_type, 
+        last_modified, 
+        size
+    }
+}
+
+use chrono;
+use std::time;
+
+pub fn readable_time(time: time::SystemTime) -> String {
+    let datetime = chrono::DateTime::<chrono::Utc>::from(time);
+    let timestamp_str = datetime.format("%m-%d-%Y %H:%M:%S").to_string();
+    timestamp_str
 }
 // old caching code.
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fileStore } from '../../stores/file.store';
+  import { filePath } from '../../stores/file.store';
   import { hashStore } from '../../stores/hash.store';
   import { algorithmStore } from '../../stores/algorithm.store';
 
@@ -11,14 +11,14 @@
 </script>
 
 <div class="flex justify-center my-3">
-  <button class="btn mx-3" on:click={fileStore.select}> Browse </button>
-  <button class="btn mx-3" disabled={!$fileStore} on:click={fileStore.reset}>
+  <button class="btn mx-3" on:click={filePath.select}> Browse </button>
+  <button class="btn mx-3" disabled={!$filePath} on:click={filePath.reset}>
     Clear
   </button>
 
   <button
     class="btn mx-3"
-    disabled={disableHashButton($fileStore, $algorithmStore)}
+    disabled={disableHashButton($filePath, $algorithmStore)}
     on:click={hashStore.hashFiles}>
     Hash
   </button>

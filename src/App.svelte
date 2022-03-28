@@ -16,9 +16,17 @@
   <!-- <div> -->
   <Menu>
     <Navbar />
-    <File />
+
+    <div class="grid grid-cols-4 gap-4">
+      <File />
+      <div class="col-span-3">
+        <Hash />
+      </div>
+    </div>
+    
+
+
     <Algorithm />
-    <Hash />
     <div class="w-full fixed bottom-0">
       <Toolbar />
       <Footer />

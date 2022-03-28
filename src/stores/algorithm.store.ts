@@ -16,8 +16,8 @@ function selectAlgos() {
 export const algorithmStore = selectAlgos();
 
 export const algorithms: string[] = [
-  "Md5",
-  "Sha1",
+  "MD5",
+  "SHA1",
   "SHA256",
   "SHA384",
   "SHA512",

@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store';
 import { invoke } from "@tauri-apps/api";
-import { fileStore } from './file.store';
+import { filePath } from './file.store';
 import { algorithmStore } from './algorithm.store';
 
 export interface FileHash {
@@ -20,7 +20,7 @@ function hashFiles() {
     subscribe,
     reset: () => set(null),
     set: (hash) => set(hash),
-    hashFiles: async () => set(await invoke<FileHash>("hash_files", { path: get(fileStore), algos: get(algorithmStore) }))
+    hashFiles: async () => set(await invoke<FileHash>("hash_files", { path: get(filePath), algos: get(algorithmStore) }))
   }
 }
 
