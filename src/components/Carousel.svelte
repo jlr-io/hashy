@@ -1,12 +1,12 @@
 <script lang="ts">
   import Card from './Card.svelte';
-  import type { FileHash } from "../stores/hash.store";
-  export let files: FileHash[];
+  import type { Hashes } from "../stores/hash.store";
+  export let files: Hashes[];
 
   const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 </script>
 
-<!-- {#if fileHashes} -->
+<!-- {#if Hasheses} -->
 
 <div class="carousel carousel-center rounded-box w-full">
   {#each files as file, i}
@@ -20,10 +20,10 @@
         </div>
       </div>
   {/each}
-  <!-- {#each fileHashes as file, i}
+  <!-- {#each Hasheses as file, i}
     <div class="carousel-item">
       <div id="slide{i}">
-        <Card fileHash={file} />
+        <Card Hashes={file} />
       </div>
       
 
@@ -31,13 +31,13 @@
     class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
   >
     <a href="slide{i + 1}" class="btn btn-circle">❮</a>
-    <a href="slide{fileHashes.length - i}" class="btn btn-circle">❯</a>
+    <a href="slide{Hasheses.length - i}" class="btn btn-circle">❯</a>
   </div>
     </div>
   {/each} -->
 </div>
   
-  <!-- {fileHashes} -->
+  <!-- {Hasheses} -->
 <!-- {/if} -->
 <!-- 
 <div class="carousel w-full">

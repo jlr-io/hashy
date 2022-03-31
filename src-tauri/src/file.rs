@@ -1,7 +1,34 @@
 use std::collections::HashMap;
+use std::{fs, io};
 
-pub type Path = String;
-pub type Bytes = Vec<u8>;
+pub fn read_file(path: &String) -> Vec<u8> {
+    println!("reading file..");
+    let mut reader = fs::File::open(path).unwrap();
+    let mut bytes = vec![];
+    io::copy(&mut reader, &mut bytes).unwrap();
+    bytes
+}
+
+pub struct Cacher
+{
+    map: HashMap<String, Vec<u8>>,
+}
+
+impl Cacher
+{
+    pub fn new() -> Cacher {
+        Cacher {
+            map: HashMap::new(),
+        }
+    }
+
+    pub fn value(&mut self, arg: &String) -> &Vec<u8> {
+        let bytes = self.map
+            .entry(String::from(arg))
+            .or_insert_with(||read_file(arg));
+        bytes
+    }
+}
 
 #[derive(Clone, serde::Serialize)]
 pub struct FileMetaData {
@@ -12,50 +39,9 @@ pub struct FileMetaData {
     last_modified: String,
 }
 
-use std::{fs, io};
-
-pub fn read_file(path: &String) -> Vec<u8> {
-    let mut reader = fs::File::open(path).unwrap();
-    let mut bytes: Bytes = vec![];
-    io::copy(&mut reader, &mut bytes).unwrap();
-    bytes
-}
-
-pub struct FileCacher<T>
-where
-    T: Fn(&String) -> Vec<u8>,
-{
-    reader: T,
-    value: HashMap<String, Vec<u8>>,
-}
-
-impl<T> FileCacher<T>
-where
-    T: Fn(&String) -> Vec<u8>,
-{
-    pub fn new(reader: T) -> FileCacher<T> {
-        FileCacher {
-            reader,
-            value: HashMap::new(),
-        }
-    }
-
-    pub fn value(&mut self, arg: &String) -> Vec<u8> {
-        let bytes = match self.value.get(arg) {
-            Some(v) => v.to_vec(),
-            None => {
-                let v = (self.reader)(arg);
-                self.value.insert(arg.to_string(), v.clone());
-                v
-            }
-        };
-        bytes
-    }
-}
-
-#[tauri::command]
-pub fn get_file_metadata(path: String) -> FileMetaData {
-    let metadata = fs::metadata(&path).expect("unable to read file");
+impl FileMetaData {
+    pub fn get(path: String) -> FileMetaData {
+        let metadata = fs::metadata(&path).expect("unable to read file");
 
     let name = String::from(path.split("/").last().unwrap());
     let file_type = if metadata.is_file() { String::from("file") } else { String::from("dir")};
@@ -70,6 +56,12 @@ pub fn get_file_metadata(path: String) -> FileMetaData {
         last_modified, 
         size
     }
+    }
+}
+
+#[tauri::command]
+pub fn get_file_metadata(path: String) -> FileMetaData {
+    FileMetaData::get(path)
 }
 
 use chrono;

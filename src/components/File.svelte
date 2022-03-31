@@ -1,26 +1,27 @@
 <script lang="ts">
   import { filePath, fileMetaData } from "../stores/file.store";
+  function truncateName(name: String): String {
+    return name.length < 20 ? name : name.slice(0, 15) + " ...";
+  }
 </script>
 
-<div>
+<div class="my-5">
   {#if $filePath}
     {#await $fileMetaData then metadata}
-
-
-        <div class="stats shadow">
-          <div class="stat">
-            <div class="stat-title">{metadata.name}</div>
-            <div class="stat-value">{metadata.size}</div>
-            <div class="stat-desc">
-              <div>Last Modified | </div>
-              {metadata.last_modified}
-            </div>
+      <div class="stats shadow">
+        <div class="stat">
+          <div class="stat-title">{truncateName(metadata.name)}</div>
+          <div class="stat-value">{metadata.size}</div>
+          <div class="stat-desc">
+            <div>Last Modified |</div>
+            {metadata.last_modified}
           </div>
         </div>
-      
+      </div>
     {/await}
   {:else}
-    Select a file.
+    <div class="text-xl">Select a file.</div>
+    
   {/if}
 
   <!-- <button class="btn" on:click="{metadata}">metadata</button> -->

@@ -22,7 +22,7 @@ fn main() {
       Ok(())
     })
     // this is where you pass in your custom commands.
-    .invoke_handler(tauri::generate_handler![hash::hash_files, file::get_file_metadata])
+    .invoke_handler(tauri::generate_handler![hash::hash_file, file::get_file_metadata])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

@@ -1,38 +1,29 @@
 <script lang="ts">
   // tailwind
   import "./app.css";
+  import { Router, Route, Link, useLocation } from "svelte-navigator";
   import File from "./components/File.svelte";
   import Algorithm from "./components/Algorithm.svelte";
-  import Footer from "./components/Layout/Footer.svelte";
-  import Navbar from "./components/Layout/Navbar.svelte";
   import Hash from "./components/Hash.svelte";
-  // import Theme from './components/Layout/Theme.svelte';
   import Menu from "./components/layout/Menu.svelte";
-  import Toolbar from "./components/Layout/Toolbar.svelte";
+  import Toolbar from "./components/Layout/HasherToolbar.svelte";
+  import Hasher from "./components/Hasher.svelte";
+  import { Routes } from "./models/route.models";
   // import Event from './components/Event.svelte';
+
+  // const location = useLocation();
+  // $: console.log($location);
+
 </script>
 
-<main>
-  <!-- <div> -->
-  <Menu>
-    <Navbar />
-
-    <div class="grid grid-cols-4 gap-4">
-      <File />
-      <div class="col-span-3">
-        <Hash />
-      </div>
-    </div>
-    
-
-
-    <Algorithm />
-    <div class="w-full fixed bottom-0">
-      <Toolbar />
-      <Footer />
-    </div>
-  </Menu>
-</main>
+<Router>
+  <main>
+      <Menu>
+        <Route path="{Routes.algorithm}" component="{Algorithm}" primary="{false}"></Route>
+        <Route path="{Routes.hasher}" component="{Hasher}" primary="{false}"></Route>
+      </Menu>
+  </main>
+</Router>
 
 <style>
   :root {
