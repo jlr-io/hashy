@@ -1,6 +1,7 @@
 import { derived, writable } from 'svelte/store';
 import { dialog, invoke } from "@tauri-apps/api";
 import type { OpenDialogOptions } from "@tauri-apps/api/dialog";
+import { hashStore } from './hash.store';
 
 export type Paths = Path[]
 export type Path = string;
@@ -25,7 +26,7 @@ function selectFiles() {
 
   return {
 		subscribe,
-		reset: () => set(null),
+		reset: () => { hashStore.set(null); set(null); },
     set: (files) => set(files),
     select: async () => set(await dialog.open(dialogOptions) as string),
 	};
@@ -37,13 +38,3 @@ export const fileMetaData = derived(
   filePath,
   async $filePath => await invoke<FileMetaData>("get_file_metadata", {path: $filePath})
 )
-
-// export const fileName = derived(
-//   filePath,
-//   $filePath => {
-//     if($filePath) {
-//       return $filePath.split('/').pop();
-//     }
-//     return '';
-//   }
-// )
