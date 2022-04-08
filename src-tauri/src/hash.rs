@@ -91,6 +91,23 @@ pub struct Hash {
 // }
 
 #[tauri::command(async)]
+pub async fn hash_file2(path: String, algo: String) -> Hash {
+  println!("hashing file..");
+  println!("path: {}", path);
+  println!("algo: {}", algo);
+  
+  let mut read = file::Cacher::new();
+  let hasher = Hasher::new(match_algo(&algo));
+  let hash = hasher.compute(read.value(&path));
+  Hash {
+    algo: algo,
+    value: hash
+  }
+  // hash
+}
+
+// TODO: 1-1
+#[tauri::command(async)]
 pub async fn hash_file(path: String, algos: Vec<String>) -> Hashes {
   let mut read = file::Cacher::new();
   let mut hashes: Vec<Hash>= Vec::new();

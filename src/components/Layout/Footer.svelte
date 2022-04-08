@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Toolbar from './HasherToolbar.svelte';
 </script>
 
 <footer class="footer items-center p-4 bg-neutral text-neutral-content">

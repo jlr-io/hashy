@@ -1,25 +1,10 @@
-import { writable } from 'svelte/store';
-
 // TODO: Create a setting for this?
-let defaultAlgorithms: string[] = [
+export let defaultAlgorithms: string[] = [
   "MD5",
   "SHA1",
   "SHA256",
   "SHA512",
 ]
-
-function selectAlgos() {
-  const { subscribe, set } = writable<string[]>(defaultAlgorithms);
-
-  return {
-    subscribe,
-    reset: () => set(null),
-    set: (algos) => set(algos),
-  }
-}
-
-export const algorithmStore = selectAlgos();
-
 
 export const algorithms: string[] = [
   "MD5",

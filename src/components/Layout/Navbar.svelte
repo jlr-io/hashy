@@ -1,14 +1,12 @@
 <script lang="ts">
-  import Theme from "./Theme.svelte";
-  import HasherToolbar from "./HasherToolbar.svelte";
-  import AlgoToolbar from "./AlgoToolbar.svelte";
-  import { link, Link, useLocation } from "svelte-navigator";
-  import type { NaviagorLocation } from 'svelte-navigator';
-  import { Routes } from "../../models/route.models";
+  import Theme from "../theme/components/Theme.svelte";
+  import { link, NavigatorLocation } from "svelte-navigator";
+  import { Routes } from '../layout/models/route.models';
+  import { useLocation } from "svelte-navigator";
 
   const location = useLocation();
 
-  const isLocationHasher = (location: NavigatorLocation) => location.pathname === Routes.hasher;
+  const isFirstPage = (location: NavigatorLocation) => location.pathname === Routes.selectAlgorithm;
 </script>
 
 <!-- navbar -->
@@ -17,25 +15,16 @@
     <div class="flex-none">
       <!-- ❮ -->
       <!-- ❯ -->
-      <button class="btn text-xl" disabled={!isLocationHasher($location)}> 
-        <a use:link href="/">❮</a>
+      <button class="btn text-xl" disabled={isFirstPage($location)}>
+        <a use:link href="{Routes.selectAlgorithm}">❮</a>
       </button>
-      <button class="btn text-xl" disabled={isLocationHasher($location)}>
-        <a use:link href="/hasher">❯</a>
-        <!-- <Link to="/hasher">❯</Link> -->
+      <button class="btn text-xl" disabled={!isFirstPage($location)}>
+        <a use:link href="{Routes.computeHash}">❯</a>
       </button>
-
     </div>
     <div class="flex-1">
-      {#if isLocationHasher($location)}
-        <HasherToolbar />
-      {:else}
-        <AlgoToolbar />
-      {/if}
-      <!-- <h1 class="normal-case text-xl ml-2">Hashy!!</h1> -->
+      HASHY!!
     </div>
-
-    
 
     <div class="flex-none">
       <Theme />

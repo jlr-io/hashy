@@ -1,21 +1,31 @@
 <script lang="ts">
-  import { filePath, fileMetaData } from "../stores/file.store";
+  import type { FileMetaData } from "./models/file.model";
+  import { createEventDispatcher } from "svelte";
+import { filePath } from "./store/file.store";
+  const dispatch = createEventDispatcher();
+
+  export let metadata: Promise<FileMetaData>;
+
+  function clearPath() {
+    dispatch("clear");
+  }
+
   function truncateName(name: String): String {
     return name.length < 20 ? name : name.slice(0, 15) + " ...";
   }
 </script>
 
 <div class="my-5">
-  {#if $filePath}
-    {#await $fileMetaData then metadata}
+  {#if metadata}
+    {#await metadata then metadata}
       <div class="indicator">
         <div class="indicator-item indicator-top">
-          <button class="btn btn-xs" on:click={filePath.reset}>X</button>
+          <button class="btn btn-xs" on:click={clearPath}>X</button>
         </div>
 
         <div class="stats shadow">
           <div class="stat">
-            <div class="stat-title">{truncateName(metadata.name)}</div>
+            <div class="stat-title truncate">{metadata.path}</div>
             <div class="stat-value">{metadata.size}</div>
             <div class="stat-desc">
               <div>Last Modified |</div>
@@ -24,10 +34,8 @@
           </div>
         </div>
       </div>
+    {:catch}
+      <p class="hidden">No file was chosen yet.</p>
     {/await}
-  {:else}
-    <div class="text-xl">Select a file.</div>
   {/if}
-
-  <!-- <button class="btn" on:click="{metadata}">metadata</button> -->
 </div>

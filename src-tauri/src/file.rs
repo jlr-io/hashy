@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::{fs, io};
 
 pub fn read_file(path: &String) -> Vec<u8> {
-    println!("reading file..");
     let mut reader = fs::File::open(path).unwrap();
     let mut bytes = vec![];
     io::copy(&mut reader, &mut bytes).unwrap();

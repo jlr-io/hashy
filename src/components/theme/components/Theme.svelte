@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme, setTheme, changeTheme, Theme } from "../../stores/theme";
+  import { theme, setTheme, changeTheme, Theme } from "../store/theme";
   $: $theme, changeTheme($theme);
 
   function toggleTheme() {

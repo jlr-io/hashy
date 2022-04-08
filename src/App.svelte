@@ -1,26 +1,24 @@
 <script lang="ts">
   // tailwind
   import "./app.css";
-  import { Router, Route, Link, useLocation } from "svelte-navigator";
-  import File from "./components/File.svelte";
-  import Algorithm from "./components/Algorithm.svelte";
-  import Hash from "./components/Hash.svelte";
+  
+  import { Router, Route } from "svelte-navigator";
+  import { Routes } from './components/layout/models/route.models';
   import Menu from "./components/layout/Menu.svelte";
-  import Toolbar from "./components/Layout/HasherToolbar.svelte";
-  import Hasher from "./components/Hasher.svelte";
-  import { Routes } from "./models/route.models";
-  // import Event from './components/Event.svelte';
-
-  // const location = useLocation();
-  // $: console.log($location);
+  import SelectAlgorithm from "./pages/SelectAlgorithm.svelte";  
+  import ComputeHash from "./pages/ComputeHash.svelte";
 
 </script>
 
 <Router>
   <main>
       <Menu>
-        <Route path="{Routes.algorithm}" component="{Algorithm}" primary="{false}"></Route>
-        <Route path="{Routes.hasher}" component="{Hasher}" primary="{false}"></Route>
+        <Route path="{Routes.selectAlgorithm}" primary="{false}">
+          <SelectAlgorithm />
+        </Route>
+        <Route path="{Routes.computeHash}" primary="{false}">
+          <ComputeHash />
+        </Route>
       </Menu>
   </main>
 </Router>
