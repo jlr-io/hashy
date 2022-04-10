@@ -1,8 +1,11 @@
 import { derived, writable } from "svelte/store";
 
+
+// TODO: create custom themes.
+
 export enum Theme {
-  light = 'light',
-  dark = 'dark'
+  light = 'garden',
+  dark = 'night'
 }
 
 const dataTheme = document.createAttribute('data-theme');
@@ -22,13 +25,3 @@ export const appTheme = derived(
     
   }
 )
-
-// theme = Theme.light;
-
-
-
-// const dataTheme = document.createAttribute('data-theme');
-// const theme = document.getElementById('globalhtml');
-// dataTheme.value = 'light';
-// theme.setAttributeNode(dataTheme);
-// console.log(theme);
