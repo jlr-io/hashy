@@ -16,7 +16,7 @@
     "@tauri-apps/cli": "^1.0.0-rc.4",
     "@tsconfig/svelte": "^2.0.1",
     "autoprefixer": "^10.4.2",
-    "daisyui": "^2.4.0",
+    "daisyui": "^2.13.6",
     "postcss": "^8.4.6",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.7",

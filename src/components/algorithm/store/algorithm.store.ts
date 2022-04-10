@@ -18,6 +18,6 @@ function state() {
   }
 }
 
-export const selectedAlgorithms = state();
+export const store = state();
 
-export const hasSelectedAlgorithms = derived(selectedAlgorithms, $selectedAlgorithms => !!$selectedAlgorithms.length)
+export const hasAlgorithms = derived(store, $store => !!$store.length)
