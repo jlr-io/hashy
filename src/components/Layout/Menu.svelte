@@ -9,12 +9,12 @@
 </div>
 
 
-<div class="hidden md:flex w-full fixed bottom-0">
+<!-- <div class="hidden md:flex w-full fixed bottom-0">
   <Footer />
-</div>
+</div> -->
 
 <style>
   .viewport {
-    height: calc(100vh - 132px);
+    height: calc(100vh - 64px);
   }
 </style>

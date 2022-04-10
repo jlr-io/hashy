@@ -20,7 +20,7 @@ export const store = state();
 
 export const filePath = derived(store, $store => $store);
 
-export const hasSelectedFilePath = derived(store, $store => !!$store);
+export const hasFilePath = derived(store, $store => !!$store);
 
 export const fileMetaData = derived(
   filePath,
