@@ -11,7 +11,7 @@
 </script>
 
 <Router>
-  <main>
+  <main class="overflow-hidden">
       <Menu>
         <Route path="{Routes.selectAlgorithm}" primary="{false}">
           <SelectAlgorithm />
