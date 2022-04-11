@@ -9,7 +9,7 @@
     <div>
       <input
         type="checkbox"
-        class="checkbox align-middle"
+        class="checkbox checkbox-primary align-middle"
         bind:group={selectedAlgorithms}
         name={algo}
         value={algo}

@@ -25,8 +25,6 @@
   };
 
   const onCompute = async () => {
-    // const loadingState = $algorithmStore.map()
-
     $algorithmStore.forEach(async (algo) => {
       let hash = {
         algo,
@@ -70,23 +68,23 @@
         {#await $fileMetaData then metadata}
 
           <!-- small screens show only file name  -->
-          <div class="block md:hidden">
+          <div class="flex text-center md:hidden">
             <p class="text-xl truncate w-64">{metadata.name}</p>
           </div>
 
           <!-- metadata stat | hide on small screens-->
-          <div class="hidden md:block">
+          <div class="hidden md:flex">
 
             <!-- indicator -->
             <div class="indicator">
-              <div class="indicator-item indicator-middle indicator-end">
+              <div class="indicator-item indicator-top indicator-end">
                 <button class="btn btn-xs" on:click={onClear}>X</button>
               </div>
-            </div>
+            
             <!-- end indicator -->
 
             <!-- stat -->
-            <div class="stats shadow bg-base-300 w-72">
+            <div class="stats shadow bg-base-300 max-w-72">
               <div class="stat">
                 <div class="stat-title">{metadata.size}</div>
                 <div class="stat-value text-lg truncate">{metadata.name}</div>
@@ -98,6 +96,9 @@
             </div>
           </div>
           <!-- end stat -->
+
+          </div>
+          <!-- end indicator -->
 
         {:catch}
           <p class="hidden">No file was chosen yet.</p>
@@ -174,3 +175,9 @@
 
 </div>
 <!-- end row -->
+
+<style>
+  progress {
+    border: none;
+  }
+</style>
