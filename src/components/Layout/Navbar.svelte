@@ -1,7 +1,7 @@
 <script lang="ts">
   import Theme from "../theme/components/Theme.svelte";
   import { Link, link, NavigatorLocation } from "svelte-navigator";
-  import { Routes } from '../layout/models/route.models';
+  import { Routes } from '../../models/route.models';
   import { useLocation } from "svelte-navigator";
 
   const location = useLocation();

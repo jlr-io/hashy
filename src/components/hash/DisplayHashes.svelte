@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { MapType, LOADING } from "./models/hash.models";
-  export let algorithms: string[] = [];
+  import { MapType, LOADING } from "../../models/../../models/hash.modelset algorithms: string[] = [];
   export let map: MapType;
 
   function isLoading(value: string) {

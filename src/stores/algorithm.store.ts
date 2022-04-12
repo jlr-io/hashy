@@ -1,6 +1,6 @@
 import { derived, writable } from 'svelte/store';
 import { defaultAlgorithms } from '../models/algorithms.models';
-import { store as hashStore } from '../../hash/store/hash.store';
+import { store as hashStore } from './hash.store';
 
 // TODO: default state.
 

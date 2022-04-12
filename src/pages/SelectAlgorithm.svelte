@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { algorithms } from "../components/algorithm/models/algorithms.models";
-  import { store as algorithmStore } from "../components/algorithm/store/algorithm.store";
+  import { algorithms } from "../models/algorithms.models";
+  import { store as algorithmStore } from "../stores/algorithm.store";
   import { Link } from "svelte-navigator";
-  import { Routes } from "../components/layout/models/route.models";
+  import { Routes } from '../models/route.models';
 </script>
 
 <!-- header and buttons -->

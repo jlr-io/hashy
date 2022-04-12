@@ -1,7 +1,7 @@
 import { derived, writable } from 'svelte/store';
 import { invoke } from "@tauri-apps/api";
-import { store as hashStore} from '../../hash/store/hash.store';
-import type { FileMetaData } from '../models/file.model';
+import { store as hashStore} from './hash.store';
+import type { FileMetadata } from '../models/file.model';
 
 function state() {
   const { subscribe, set } = writable<string>();
@@ -22,7 +22,7 @@ export const filePath = derived(store, $store => $store);
 
 export const hasFilePath = derived(store, $store => !!$store);
 
-export const fileMetaData = derived(
+export const fileMetadata = derived(
   filePath,
-  async $filePath => await invoke<FileMetaData>("get_file_metadata", {path: $filePath})
+  async $filePath => await invoke<FileMetadata>("get_file_metadata", {path: $filePath})
 );

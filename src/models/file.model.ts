@@ -1,6 +1,6 @@
 import type { OpenDialogOptions } from "@tauri-apps/api/dialog";
 
-export interface FileMetaData {
+export interface FileMetadata {
   name: String,
   path: String,
   file_type: String,
