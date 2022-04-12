@@ -14,4 +14,12 @@
   .toolbar {
     @apply flex w-full justify-center py-5 absolute bottom-0
   }
+
+  .hashy-button {
+    @apply btn btn-md mx-1
+  }
+
+  /* .hashy-button-loading {
+    @apply btn btn-sm shadow-lg mx-1 md:btn-md md:mx-2 loading
+  } */
 }
