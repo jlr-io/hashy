@@ -3,10 +3,10 @@
   import "./app.css";
   
   import { Router, Route } from "svelte-navigator";
-  import { Routes } from './components/layout/models/route.models';
-  import Menu from "./components/layout/Menu.svelte";
-  import SelectAlgorithm from "./pages/SelectAlgorithm.svelte";  
-  import ComputeHash from "./pages/ComputeHash.svelte";
+  import { Routes } from './models/route.models';
+  import Menu from './components/layout/Menu.svelte';
+  import SelectAlgorithm from './pages/SelectAlgorithm.svelte';
+  import ComputeHash from "./pages/HashPage/HashPage.svelte";
 
 </script>
 
