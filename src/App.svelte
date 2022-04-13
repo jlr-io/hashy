@@ -2,26 +2,27 @@
   // tailwind
   import "./app.css";
   
-  import { Router, Route } from "svelte-navigator";
-  import { Routes } from './models/route.models';
+  // import { Router, Route } from "svelte-navigator";
+  // import { Routes } from './models/route.models';
   import Menu from './components/layout/Menu.svelte';
-  import SelectAlgorithm from './pages/SelectAlgorithm.svelte';
+  // import SelectAlgorithm from './pages/SelectAlgorithm.svelte';
   import ComputeHash from "./pages/HashPage/HashPage.svelte";
 
 </script>
 
-<Router>
-  <main class="overflow-hidden">
+<!-- <Router> -->
+  <main class="overflow-hidden select-none">
       <Menu>
-        <Route path="{Routes.selectAlgorithm}" primary="{false}">
+        <ComputeHash />
+        <!-- <Route path="{Routes.selectAlgorithm}" primary="{false}">
           <SelectAlgorithm />
         </Route>
         <Route path="{Routes.computeHash}" primary="{false}">
-          <ComputeHash />
-        </Route>
+          
+        </Route> -->
       </Menu>
   </main>
-</Router>
+<!-- </Router> -->
 
 <style>
   :root {

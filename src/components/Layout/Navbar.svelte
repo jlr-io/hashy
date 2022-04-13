@@ -1,16 +1,16 @@
 <script lang="ts">
   import Theme from "../theme/components/Theme.svelte";
-  import { Link, link, NavigatorLocation } from "svelte-navigator";
-  import { Routes } from '../../models/route.models';
-  import { useLocation } from "svelte-navigator";
+  // import { Link, link, NavigatorLocation } from "svelte-navigator";
+  // import { Routes } from '../../models/route.models';
+  // import { useLocation } from "svelte-navigator";
 
-  const location = useLocation();
+  // const location = useLocation();
 
-  const isFirstPage = (location: NavigatorLocation) => location.pathname === Routes.selectAlgorithm;
+  // const isFirstPage = (location: NavigatorLocation) => location.pathname === Routes.selectAlgorithm;
 
-  const btnClass = 'text-xl mx-2 btn btn-sm btn-base-200'
+  // const btnClass = 'text-xl mx-2 btn btn-sm btn-base-200'
 
-  const btnDisabledClass = 'text-xl mx-2 btn btn-sm btn-disabled'
+  // const btnDisabledClass = 'text-xl mx-2 btn btn-sm btn-disabled'
 </script>
 
 <!-- bg-neutral text-neutral-content -->
@@ -21,12 +21,12 @@
       <!-- ❮ -->
       <!-- ❯ -->
 
-      <a use:link href="{Routes.selectAlgorithm}" role="button" class="{!isFirstPage($location) ? btnClass : btnDisabledClass}">❮</a>
-      <a use:link href="{Routes.computeHash}" role="button" class="{isFirstPage($location) ? btnClass : btnDisabledClass}">❯</a>
+      <!-- <a use:link href="{Routes.selectAlgorithm}" role="button" class="{!isFirstPage($location) ? btnClass : btnDisabledClass}">❮</a> -->
+      <!-- <a use:link href="{Routes.computeHash}" role="button" class="{isFirstPage($location) ? btnClass : btnDisabledClass}">❯</a> -->
 
     </div>
     <div class="flex-1">
-      <!-- app title goes here. -->
+      <h3><b>Hashy</b> v.0.1</h3>
     </div>
 
     <div class="flex-none">

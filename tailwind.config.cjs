@@ -6,7 +6,7 @@ module.exports = {
       safelist: [/data-theme$/],
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [require("daisyui")],
   // daisyUI config (optional)
   daisyui: {
     styled: true,

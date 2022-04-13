@@ -15,7 +15,7 @@
 </script>
 
 <!-- container -->
-<div class="container mx-auto h-[380px] lg:h-[500px] overflow-y-auto">
+<div class="select-none container mx-auto h-[380px] lg:h-[500px] overflow-y-auto">
   <!-- hashes -->
   {#if algorithms}
     {#each algorithms as algo}

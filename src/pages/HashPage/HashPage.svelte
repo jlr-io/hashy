@@ -1,23 +1,30 @@
 <script lang="ts">
   import { dialog, invoke } from "@tauri-apps/api";
-  import { dialogOptions } from '../../models/file.model';
+  
+  
+  import { algorithms } from "../../models/algorithms.models";
   import {
     hasAlgorithms,
     store as algorithmStore,
   } from '../../stores/algorithm.store';
+
+  import { dialogOptions } from '../../models/file.model';
   import {
     filePath,
     fileMetadata,
     hasFilePath,
     store as fileStore,
   } from '../../stores/file.store';
-  import { store as hashStore } from "../../stores/hash.store";
-  import { Hash, LOADING } from '../../models/hash.models';
 
-  import FileMetadata from "./components/FileMetadata.svelte";
-  import HashButtons from "./components/HashButtons.svelte";
-  import TargetHashInput from "./components/TargetHashInput.svelte";
-  import HashCards from "./components/HashCards.svelte";
+  import { Hash, LOADING } from '../../models/hash.models';
+  import { store as hashStore } from "../../stores/hash.store";
+  
+
+  import Metadata from "./components/Metadata.svelte";
+  import Buttons from "./components/Buttons.svelte";
+  import Input from "./components/Input.svelte";
+  import Cards from "./components/Cards.svelte";
+  import Modal from "./components/Modal.svelte";
 
   const onBrowse = async () => {
     fileStore.set((await dialog.open(dialogOptions)) as string);
@@ -62,37 +69,51 @@
 </script>
 
 <!-- info row -->
-<div class="flex flex-wrap mb-6 md:mb-4">
+<div class="flex flex-wrap mb-4">
 
   <!-- left half -->
-  <div class="flex flex-wrap justify-center items-center h-20 w-full mt-1 md:w-1/2 md:pt-5 md:mb-0 md:h-32">
-    <FileMetadata 
+  <div class="flex flex-wrap justify-center md:justify-end max-h-20 md:max-h-32 mt-1 mb-2 md:pt-5 md:mb-0 w-full md:w-1/2">
+    
+    <div class="flex w-full md:w-5/6 justify-center">
+      <Metadata 
       disableButton={disableClearButton($hasFilePath, isAnyLoading)}
       metadata={$fileMetadata} 
       on:clear={onClear}/>
+    </div>
+    
   </div>
 
   <!-- right half -->
-  <div class="flex flex-wrap justify-center items-center h-8 w-full md:w-1/2 md:pt-5 md:h-32">
-    {#if $hasFilePath}
-      <div class="hidden w-9/12 mb-2 text-center md:inline-block">
-        <TargetHashInput />
-      </div>
-    {:else}
-      <p class="text-lg w-full text-center">
-        Press the "Browse" button to select a file.
-      </p>
-    {/if}
+  <div class="flex flex-wrap justify-start md:justify-center max-h-20 w-full md:w-1/2 md:pt-3 md:max-h-32">
+    <!-- <div class="h-"> -->
+      
+    <!-- </div> -->
 
     <!-- buttons -->
-    <div class="w-full text-center mt-1">
-      <HashButtons 
+    <div class="w-full md:w-5/6 lg:w-4/6 text-center md:mb-2">
+      <Buttons 
+        {algorithms}
+        bind:selectedAlgorithms={$algorithmStore}
         isLoading={isAnyLoading} 
         disableButton={disableComputeButton($hasFilePath, $hasAlgorithms, isAnyLoading)}
         on:browse={onBrowse}
         on:hash={onCompute}
       />
     </div>
+
+    <div class="w-5/6 lg:w-4/6 text-center">
+      {#if $hasFilePath}
+      <div class="hidden w-full text-center md:inline-block">
+        <Input />
+      </div>
+    {:else}
+      <p class="text-lg w-full text-center">
+        Press the "Browse" button to select a file.
+      </p>
+    {/if}
+    </div>
+
+    
 
   </div>
 
@@ -101,7 +122,7 @@
 
 <!-- hash row -->
 <div class="flex mb-4">
-  <HashCards 
+    <Cards 
     algorithms={$algorithmStore}
     map={$hashStore}
   />

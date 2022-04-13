@@ -12,9 +12,6 @@
     dispatch("clear");
   }
 
-  function disableClearButton(hasFilePath: boolean, isAnyLoading: boolean): boolean {
-    return !hasFilePath || isAnyLoading;
-  }
 </script>
 
 <div>
@@ -24,7 +21,9 @@
           <!-- indicator -->
           <div class="indicator">
             <div class="indicator-item indicator-top indicator-end">
-              <button class="btn btn-xs" 
+
+              <div class="tooltip tooltip-right tooltip-error" data-tip="Clear">
+                <button class="btn btn-xs" 
                 disabled={disableButton} 
                 on:click={clear}>
                 <Icon
@@ -33,6 +32,8 @@
                   style="color: hsl(var(--er));"
                 /></button
               >
+              </div>
+              
             </div>
 
             <!-- stat -->
