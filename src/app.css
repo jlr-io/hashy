@@ -16,7 +16,7 @@
   }
 
   .hashy-button {
-    @apply btn btn-md mx-1
+    @apply btn btn-lg mx-1 
   }
 
   /* .hashy-button-loading {

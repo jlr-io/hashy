@@ -22,7 +22,7 @@
 
 <!-- checkboxes -->
 <div class="flex mb-4">
-  <div class="container mx-auto h-[380px] lg:h-[500px] overflow-y-auto">
+  <div class="overflow-y-auto">
 
     <!-- rid grid-cols-2 md:grid-rows-6 grid-flow-col justify-center align-middle w-full gap-4 my-5 mx-2 -->
     <div class="grid grid-cols-2 grid-rows-none md:grid-cols-none md:grid-flow-col md:grid-rows-6">
