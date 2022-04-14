@@ -17,18 +17,17 @@
 <div>
   {#if metadata}
       {#await metadata then metadata}
-        <div class="flex">
           <!-- indicator -->
           <div class="indicator">
             <div class="indicator-item indicator-top indicator-end">
 
               <div class="tooltip tooltip-right tooltip-error" data-tip="Clear">
-                <button class="btn btn-xs" 
+                <button class="btn btn-xs btn-circle" 
                 disabled={disableButton} 
                 on:click={clear}>
                 <Icon
                   data={close}
-                  scale={1.25}
+                  scale={1}
                   style="color: hsl(var(--er));"
                 /></button
               >
@@ -50,7 +49,6 @@
               </div>
             </div>
           </div>
-        </div>
       {:catch}
         <p class="hidden">No file was chosen yet.</p>
       {/await}

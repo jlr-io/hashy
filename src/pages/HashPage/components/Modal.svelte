@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from "svelte-awesome";
-  import { close, list} from "svelte-awesome/icons";
+  import { close, list } from "svelte-awesome/icons";
 
   export let algorithms: string[];
   export let selectedAlgorithms: string[];
@@ -8,8 +8,7 @@
 </script>
 
 <!-- The button to open modal -->
-<!-- <a href="#modal" class="hashy-button btn-circle btn-disabled" class:btn-disabled={true} ><Icon data={list} scale={1.5}/></a> -->
-<label for="modal" class="btn btn-lg mx-1 btn-circle" class:btn-disabled={isLoading}><Icon data={list} scale={1.5}/></label>
+<label for="modal" class="btn btn-lg mx-1 btn-circle shadow-lg" class:btn-disabled={isLoading}><Icon data={list} scale={1.5}/></label>
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="modal" class="modal-toggle">
@@ -34,11 +33,11 @@
     </div>
     
     <div class="modal-action">
-     <a href="#" class="btn btn-sm btn-circle absolute right-2 top-2">
-      <Icon data={close} />
-      </a>
+     <label for="modal" class="btn btn-sm btn-circle absolute right-2 top-2">
+        <Icon data={close} />
+      </label>
 
-      <a href="#" class="btn">Close</a>
+      <label for="modal" class="btn">Close</label>
     </div>
   </div>
 </div>

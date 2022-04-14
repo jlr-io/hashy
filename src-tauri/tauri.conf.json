@@ -52,6 +52,9 @@
     "allowlist": {
       "dialog": {
         "open": true
+      },
+      "clipboard": {
+        "all": true
       }
     },
     "windows": [
