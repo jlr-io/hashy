@@ -34,17 +34,17 @@
 
 <div class="tooltip align-top" data-tip="Browse">
   <button
-    class="hashy-button btn-circle"
+    class="hashy-button btn-circle shadow-lg"
     disabled={isLoading}
     on:click={onBrowse}
   >
-    <Icon data={folderOpen} scale={1.75} class="text-center"/>
+    <Icon data={folderOpen} scale={1.75}/>
   </button>
 </div>
 
 <div class="tooltip align-top" data-tip="Hash">
   <button
-    class="hashy-button btn-circle"
+    class="hashy-button btn-circle shadow-lg"
     class:loading={isLoading}
     disabled={disableButton}
     on:click={onHash}

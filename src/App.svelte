@@ -11,7 +11,8 @@
 </script>
 
 <!-- <Router> -->
-  <main class="overflow-hidden select-none">
+  <!-- select none -->
+  <main class="overflow-hidden">
       <Menu>
         <ComputeHash />
         <!-- <Route path="{Routes.selectAlgorithm}" primary="{false}">

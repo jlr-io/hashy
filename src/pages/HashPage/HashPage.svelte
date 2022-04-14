@@ -63,34 +63,36 @@
     return !hasFilePath || isAnyLoading;
   }
 
+  let target;
+
   // make a store value?
   let isAnyLoading;
   $: $hashStore, isAnyLoading = [...$hashStore.values()].includes(LOADING);
 </script>
 
 <!-- info row -->
-<div class="flex flex-wrap mb-4">
+<div class="flex flex-wrap container mx-auto mb-4">
 
   <!-- left half -->
-  <div class="flex flex-wrap justify-center md:justify-end max-h-20 md:max-h-32 mt-1 mb-2 md:pt-5 md:mb-0 w-full md:w-1/2">
+  <div class="flex flex-wrap justify-center md:justify-end max-h-20 md:max-h-32 md:h-32 mt-6 mb-4 md:mt-0 md:pt-5 md:mb-0 w-full md:w-1/2">
     
-    <div class="flex w-full md:w-5/6 justify-center">
+    <div class="flex w-full justify-center">
       <Metadata 
-      disableButton={disableClearButton($hasFilePath, isAnyLoading)}
-      metadata={$fileMetadata} 
-      on:clear={onClear}/>
+        disableButton={disableClearButton($hasFilePath, isAnyLoading)}
+        metadata={$fileMetadata} 
+        on:clear={onClear}/>
     </div>
     
   </div>
 
   <!-- right half -->
-  <div class="flex flex-wrap justify-start md:justify-center max-h-20 w-full md:w-1/2 md:pt-3 md:max-h-32">
+  <div class="flex flex-wrap justify-start md:justify-center max-h-20 w-full md:w-1/2 md:pt-3 md:h-32 md:max-h-32">
     <!-- <div class="h-"> -->
       
     <!-- </div> -->
 
     <!-- buttons -->
-    <div class="w-full md:w-5/6 lg:w-4/6 text-center md:mb-2">
+    <div class="w-full lg:w-4/6 text-center md:mb-2">
       <Buttons 
         {algorithms}
         bind:selectedAlgorithms={$algorithmStore}
@@ -104,7 +106,7 @@
     <div class="w-5/6 lg:w-4/6 text-center">
       {#if $hasFilePath}
       <div class="hidden w-full text-center md:inline-block">
-        <Input />
+        <Input bind:target/>
       </div>
     {:else}
       <p class="text-lg w-full text-center">
@@ -123,7 +125,8 @@
 <!-- hash row -->
 <div class="flex mb-4">
     <Cards 
-    algorithms={$algorithmStore}
-    map={$hashStore}
+      algorithms={$algorithmStore}
+      map={$hashStore}
+      {target}
   />
 </div>
