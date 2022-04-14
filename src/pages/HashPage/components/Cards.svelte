@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { fly, scale} from 'svelte/transition';
+  import { elasticOut, backInOut } from 'svelte/easing';
+
   import { clipboard } from "@tauri-apps/api";
   import Icon from "svelte-awesome";
-  import { spinner, checkCircle, copy, thumbsUp } from "svelte-awesome/icons";
+  import { spinner, check, copy, thumbsUp } from "svelte-awesome/icons";
   import { LOADING } from "../../../models/hash.models";
 
   export let algorithms: string[];
@@ -56,30 +59,35 @@
           <b>{algo}</b>
 
           <span class="float-right">
-            <div class="{map.get(algo) ? 'tooltip tooltip-left tooltip-info' : ''}" data-tip={getButtonState(algo, buttonStates)}>
-              <!-- disable button -->
+            <div
+              class="{map.get(algo) ? 'tooltip tooltip-left tooltip-info' : ''}" 
+              data-tip={getButtonState(algo, buttonStates)}>
               <button
-                class="btn btn-sm btn-circle"
+                class="btn btn-sm btn-circle hidden md:inline-flex"
                 class:btn-disabled={!map.get(algo)}
                 on:click={() => onCopy(algo, map.get(algo))}>
+
                 {#if isCopy(algo, buttonStates)}
-                  <Icon data={copy} />
+                  <div in:fly="{{y: 10, duration: 250}}"><Icon data={copy} /></div>
                 {:else}
-                  <Icon data={thumbsUp} />
+                  <div in:fly="{{y: -10, duration: 1000, easing: elasticOut}}" ><Icon data={thumbsUp} /></div>
                 {/if}
+
               </button>
             </div>
           </span>
 
+          <!-- out:fly="{{y: 30, duration: 500}}" -->
           {#if isTarget(map.get(algo), target)}
-            <span class="float-right">
-              <div class="btn btn-circle btn-sm bg-base-100 border-none mr-2">
+            <span 
+              transition:scale="{{duration: 750, delay: 50, opacity: 0.5, start: 0, easing: backInOut}}" 
+              class="hidden md:inline-flex float-right hover:bg-none hover:bg-neutral btn btn-sm btn-circle mr-2 bg-neutral border-none">
                 <Icon
-                  data={checkCircle}
-                  scale={1.75}
+                  data={check}
+                  scale={1.5}
+                  
                   style="color: hsl(var(--su));"
                 />
-              </div>
             </span>
           {/if}
         </div>
