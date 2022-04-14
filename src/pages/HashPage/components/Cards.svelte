@@ -56,10 +56,11 @@
           <b>{algo}</b>
 
           <span class="float-right">
-            <div class="tooltip tooltip-left tooltip-info" data-tip={getButtonState(algo, buttonStates)}>
+            <div class="{map.get(algo) ? 'tooltip tooltip-left tooltip-info' : ''}" data-tip={getButtonState(algo, buttonStates)}>
               <!-- disable button -->
               <button
                 class="btn btn-sm btn-circle"
+                class:btn-disabled={!map.get(algo)}
                 on:click={() => onCopy(algo, map.get(algo))}>
                 {#if isCopy(algo, buttonStates)}
                   <Icon data={copy} />
@@ -72,7 +73,7 @@
 
           {#if isTarget(map.get(algo), target)}
             <span class="float-right">
-              <div class="btn btn-circle btn-sm bg-base-100 border-none">
+              <div class="btn btn-circle btn-sm bg-base-100 border-none mr-2">
                 <Icon
                   data={checkCircle}
                   scale={1.75}
