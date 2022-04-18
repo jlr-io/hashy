@@ -24,5 +24,10 @@ export const hasFilePath = derived(store, $store => !!$store);
 
 export const fileMetadata = derived(
   filePath,
-  async $filePath => await invoke<FileMetadata>("get_file_metadata", {path: $filePath})
+  async $filePath => {
+    if($filePath) {
+      return await invoke<FileMetadata>("get_file_metadata", {path: $filePath})
+    }
+    return null;
+  }
 );

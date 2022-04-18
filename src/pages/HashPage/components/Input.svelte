@@ -37,7 +37,7 @@
     bind:value={target}
     type="text"
     placeholder="Paste hash to verify"
-    class="input input-bordered w-full"
+    class="input input-bordered w-full h-14"
   />
   
 </div>

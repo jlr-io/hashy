@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { dialog, invoke } from "@tauri-apps/api";
-  
-  
+  import { blur } from 'svelte/transition';
+  import { dialog, invoke, event } from "@tauri-apps/api";
   import { algorithms } from "../../models/algorithms.models";
   import {
     hasAlgorithms,
@@ -18,13 +17,11 @@
 
   import { Hash, LOADING } from '../../models/hash.models';
   import { store as hashStore } from "../../stores/hash.store";
-  
 
   import Metadata from "./components/Metadata.svelte";
   import Buttons from "./components/Buttons.svelte";
   import Input from "./components/Input.svelte";
   import Cards from "./components/Cards.svelte";
-  import Modal from "./components/Modal.svelte";
 
   const onBrowse = async () => {
     fileStore.set((await dialog.open(dialogOptions)) as string);
@@ -68,58 +65,43 @@
   // make a store value?
   let isAnyLoading;
   $: $hashStore, isAnyLoading = [...$hashStore.values()].includes(LOADING);
+
 </script>
 
 <!-- info row -->
-<div class="flex flex-wrap container mx-auto mb-4">
-
+<div class="flex flex-wrap container mx-auto mb-2">
   <!-- left half -->
-  <div class="flex flex-wrap justify-center md:justify-end max-h-20 md:max-h-32 md:h-32 mt-6 mb-4 md:mt-0 md:pt-5 md:mb-0 w-full md:w-1/2">
-    
-    <div class="flex w-full justify-center">
-      <Metadata 
-        disableButton={disableClearButton($hasFilePath, isAnyLoading)}
-        metadata={$fileMetadata} 
-        on:clear={onClear}/>
+  <div class="flex flex-wrap justify-center items-center max-h-20 md:h-32 md:max-h-32 mt-6 mb-4 md:mt-0 md:mb-0 w-full md:w-1/2">
+    <div class="flex">
+      <!-- {#if $hasFilePath} -->
+        <div in:blur="{{duration: 500}}" class="mt-4">
+          <Metadata 
+            hasFilePath={$hasFilePath}
+            disableButton={disableClearButton($hasFilePath, isAnyLoading)}
+            metadata={$fileMetadata} 
+            on:clear={onClear}/>
+        </div>
     </div>
-    
   </div>
 
   <!-- right half -->
-  <div class="flex flex-wrap justify-start md:justify-center max-h-20 w-full md:w-1/2 md:pt-3 md:h-32 md:max-h-32">
-    <!-- <div class="h-"> -->
-      
-    <!-- </div> -->
+  <div class="flex flex-wrap md:justify-center items-center md:items-start max-h-20 w-full md:w-1/2 md:h-32 md:max-h-32">
 
-    <!-- buttons -->
-    <div class="w-full lg:w-4/6 text-center md:mb-2">
+    <div class="w-full lg:w-4/6 text-center">
       <Buttons 
         {algorithms}
         bind:selectedAlgorithms={$algorithmStore}
         isLoading={isAnyLoading} 
         disableButton={disableComputeButton($hasFilePath, $hasAlgorithms, isAnyLoading)}
         on:browse={onBrowse}
-        on:hash={onCompute}
+        on:compute={onCompute}
       />
     </div>
 
-    <div class="w-5/6 lg:w-4/6 text-center">
-      {#if $hasFilePath}
-      <div class="hidden w-full text-center md:inline-block">
-        <Input bind:target/>
-      </div>
-    {:else}
-      <p class="text-lg w-full text-center">
-        Press the "Browse" button to select a file.
-      </p>
-    {/if}
+    <div class="w-11/12 lg:w-full text-center mt-2">
+      <Input bind:target/>
     </div>
-
-    
-
   </div>
-
-  <!-- end row -->
 </div>
 
 <!-- hash row -->
