@@ -4,8 +4,8 @@
 
   import { event } from '@tauri-apps/api';
   import { store as fileStore } from './stores/file.store';
-  import Menu from './components/layout/Menu.svelte';
-  import ComputeHash from "./pages/HashPage/HashPage.svelte";
+  import Menu from './components/Menu.svelte';
+  import ComputeHash from "./components/HashPage.svelte";
 
   let fileDropEvent = 'tauri://file-drop';
   let fileDropHoverEvent = 'tauri://file-drop-hover';

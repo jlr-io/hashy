@@ -11,7 +11,7 @@ export enum Theme {
 const dataTheme = document.createAttribute('data-theme');
 const html = document.getElementById('globalhtml');
 
-export const theme = writable(Theme.dark);
+export const theme = writable(Theme.light);
 export const setTheme = (val: Theme) => theme.set(val);
 
 export function changeTheme(theme: Theme) {

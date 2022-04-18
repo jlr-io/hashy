@@ -5,7 +5,7 @@
   import { clipboard } from "@tauri-apps/api";
   import Icon from "svelte-awesome";
   import { spinner, check, copy, thumbsUp } from "svelte-awesome/icons";
-  import { LOADING } from "../../../models/hash.models";
+  import { LOADING } from "../models/hash.models";
 
   export let algorithms: string[];
   export let map: Map<string, string>;

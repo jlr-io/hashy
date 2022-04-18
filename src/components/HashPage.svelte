@@ -1,27 +1,30 @@
 <script lang="ts">
   import { blur } from 'svelte/transition';
-  import { dialog, invoke, event } from "@tauri-apps/api";
-  import { algorithms } from "../../models/algorithms.models";
+  import { dialog, invoke } from "@tauri-apps/api";
+  import { algorithms } from "../models/algorithms.models";
   import {
     hasAlgorithms,
     store as algorithmStore,
-  } from '../../stores/algorithm.store';
+  } from '../stores/algorithm.store';
 
-  import { dialogOptions } from '../../models/file.model';
+  import { dialogOptions } from '../models/file.model';
   import {
     filePath,
     fileMetadata,
     hasFilePath,
     store as fileStore,
-  } from '../../stores/file.store';
+  } from '../stores/file.store';
 
-  import { Hash, LOADING } from '../../models/hash.models';
-  import { store as hashStore } from "../../stores/hash.store";
+  import { Hash, LOADING } from '../models/hash.models';
+  import { 
+    isAnyLoading, 
+    store as hashStore 
+  } from "../stores/hash.store";
 
-  import Metadata from "./components/Metadata.svelte";
-  import Buttons from "./components/Buttons.svelte";
-  import Input from "./components/Input.svelte";
-  import Cards from "./components/Cards.svelte";
+  import Metadata from "./Metadata.svelte";
+  import Buttons from "./Buttons.svelte";
+  import Input from "./Input.svelte";
+  import Cards from "./Cards.svelte";
 
   const onBrowse = async () => {
     fileStore.set((await dialog.open(dialogOptions)) as string);
@@ -63,8 +66,8 @@
   let target;
 
   // make a store value?
-  let isAnyLoading;
-  $: $hashStore, isAnyLoading = [...$hashStore.values()].includes(LOADING);
+  // let isAnyLoading;
+  // $: $hashStore, isAnyLoading = [...$hashStore.values()].includes(LOADING);
 
 </script>
 
@@ -77,7 +80,7 @@
         <div in:blur="{{duration: 500}}" class="mt-4">
           <Metadata 
             hasFilePath={$hasFilePath}
-            disableButton={disableClearButton($hasFilePath, isAnyLoading)}
+            disableButton={disableClearButton($hasFilePath, $isAnyLoading)}
             metadata={$fileMetadata} 
             on:clear={onClear}/>
         </div>
@@ -91,8 +94,8 @@
       <Buttons 
         {algorithms}
         bind:selectedAlgorithms={$algorithmStore}
-        isLoading={isAnyLoading} 
-        disableButton={disableComputeButton($hasFilePath, $hasAlgorithms, isAnyLoading)}
+        isLoading={$isAnyLoading} 
+        disableButton={disableComputeButton($hasFilePath, $hasAlgorithms, $isAnyLoading)}
         on:browse={onBrowse}
         on:compute={onCompute}
       />

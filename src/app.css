@@ -3,23 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-  /* .btn-primary {
-    @apply rounded px-2 bg-emerald-600 text-white shadow-lg hover:opacity-75
-  }
-
-  .btn-primary-disabled {
-    @apply bg-emerald-700 hover:opacity-80
-  } */
-
-  .toolbar {
-    @apply flex w-full justify-center py-5 absolute bottom-0
-  }
-
   .hashy-button {
     @apply btn btn-lg mx-1 
   }
-
-  /* .hashy-button-loading {
-    @apply btn btn-sm shadow-lg mx-1 md:btn-md md:mx-2 loading
-  } */
 }
