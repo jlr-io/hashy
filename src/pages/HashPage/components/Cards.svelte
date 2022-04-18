@@ -23,7 +23,7 @@
   }
 
   function isTarget(hash: string, target: string): boolean {
-    return hash && hash === target;
+    return hash && hash.toLowerCase() === target.toLowerCase();
   }
 
   const isCopy = (algo: string, state: Map<string, ButtonState>) => 
