@@ -98,7 +98,7 @@
       />
     </div>
 
-    <div class="w-11/12 lg:w-full text-center mt-2">
+    <div class="hidden md:inline-flex w-11/12 lg:w-full text-center mt-2">
       <Input bind:target/>
     </div>
   </div>
