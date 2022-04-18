@@ -15,8 +15,8 @@
 
   const dispatch = createEventDispatcher();
 
-  function onHash() {
-    dispatch('hash');
+  function onCompute() {
+    dispatch('compute');
   }
 
   function onBrowse() {
@@ -42,12 +42,12 @@
   </button>
 </div>
 
-<div class="tooltip align-top" data-tip="Hash">
+<div class="tooltip align-top" data-tip="Compute">
   <button
     class="hashy-button btn-circle shadow-lg"
     class:loading={isLoading}
     disabled={disableButton}
-    on:click={onHash}
+    on:click={onCompute}
   >
     {#if !isLoading}
       <Icon data={fileCodeO} scale={1.75} />
