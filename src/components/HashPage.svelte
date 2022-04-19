@@ -43,11 +43,14 @@
         value: LOADING,
       };
       hashStore.updateMap(hash);
-      hash = await invoke<Hash>("hash_file", {
+      let result = await invoke<Hash>("hash_file", {
         path: $filePath,
         algo: algo,
-      });
-      hashStore.updateMap(hash);
+      })
+      .then((hash) => hash)
+      .catch((error) => ({ ...hash, value: error }))
+
+      hashStore.updateMap(result);
     });
   };
 
