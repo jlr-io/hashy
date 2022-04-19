@@ -1,30 +1,46 @@
 use std::collections::HashMap;
 use std::{fs, io};
 
-pub fn read_file(path: &String) -> Vec<u8> {
-    let mut reader = fs::File::open(path).unwrap();
+pub fn read_file(path: &String) -> Result<Vec<u8>, io::Error> {
+    let reader = fs::File::open(path);
+
+    let mut reader = match reader {
+        Ok(file) => file,
+        Err(error) => return Err(error)
+    };
+
     let mut bytes = vec![];
-    io::copy(&mut reader, &mut bytes).unwrap();
-    bytes
+
+    match io::copy(&mut reader, &mut bytes) {
+        Ok(_) => return Ok(bytes),
+        Err(error) => return Err(error)
+    };
 }
 
-pub struct Cacher {
-    map: HashMap<String, Vec<u8>>,
+pub struct Cacher
+{
+    map: HashMap<String, Result<Vec<u8>, io::Error>>,
 }
 
-impl Cacher {
+impl Cacher
+{
     pub fn new() -> Cacher {
         Cacher {
             map: HashMap::new(),
         }
     }
 
-    pub fn value(&mut self, arg: &String) -> &Vec<u8> {
+    pub fn value(&mut self, arg: &String) -> Result<&[u8], String> {
         let bytes = self
             .map
             .entry(String::from(arg))
-            .or_insert_with(|| read_file(arg));
-        bytes
+            .or_insert_with(|| read_file(arg))
+            .as_deref();
+
+        match bytes {
+            Ok(bytes) => return Ok(bytes),
+            Err(_) => return Err("There was an error reading the file".into())
+        }
     }
 }
 

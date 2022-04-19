@@ -1,14 +1,14 @@
 use blake2::{Blake2b512, Blake2s256};
 use digest;
+use fsb::{Fsb160, Fsb224, Fsb256, Fsb384, Fsb512};
+use gost94::Gost94CryptoPro;
+use groestl::Groestl256;
 use hex::encode_upper;
 use md5::Md5;
 use ripemd::{Ripemd160, Ripemd320};
 use sha1::Sha1;
 use sha2::{Sha256, Sha384, Sha512};
 use sha3::{Sha3_224, Sha3_256, Sha3_384, Sha3_512};
-use fsb::{Fsb160, Fsb224, Fsb256, Fsb384, Fsb512};
-use gost94::Gost94CryptoPro;
-use groestl::Groestl256;
 use shabal::{Shabal192, Shabal224, Shabal256, Shabal384, Shabal512};
 use sm3::Sm3;
 use streebog::*;
@@ -29,38 +29,45 @@ pub struct Hash {
     value: String,
 }
 
-#[tauri::command(async)]
-pub async fn hash_file(path: String, algo: String) -> Hash {
-  let mut read = file::Cacher::new();
-  let hasher = Hasher::new(match_algo(&algo));
-  let hash = hasher.compute(read.value(&path));
-  Hash {
-    algo: algo,
-    value: hash
-  }
+#[tauri::command]
+pub fn hash_file(path: String, algo: String) -> Result<Hash, String> {
+    let mut reader = file::Cacher::new();
+    let hasher = Hasher::new(match_algo(&algo));
+
+    let bytes = reader.value(&path);
+
+    let hash = match bytes {
+      Ok(bytes) => hasher.compute(bytes),
+      Err(error) => return Err(error)
+    };
+    
+    Ok(Hash {
+        algo: algo,
+        value: hash,
+    })
 }
 
 pub struct Hasher<T>
 where
-T: digest::DynDigest,
-T: ?Sized
+    T: digest::DynDigest,
+    T: ?Sized,
 {
-  digest: Box<T>,
+    digest: Box<T>,
 }
 
 impl<T> Hasher<T>
 where
-T: digest::DynDigest,
-T: ?Sized
+    T: digest::DynDigest,
+    T: ?Sized,
 {
-  pub fn new (digest: Box<T>) -> Hasher<T> {
-    Hasher { digest }
-  } 
+    pub fn new(digest: Box<T>) -> Hasher<T> {
+        Hasher { digest }
+    }
 
-  pub fn compute(mut self, bytes: &Vec<u8>) -> String {
-    self.digest.update(bytes);
-    return encode_upper(self.digest.finalize());
-  }
+    pub fn compute(mut self, bytes: &[u8]) -> String {
+        self.digest.update(bytes);
+        return encode_upper(self.digest.finalize());
+    }
 }
 
 pub fn match_algo(algo: &str) -> Box<dyn digest::DynDigest> {
