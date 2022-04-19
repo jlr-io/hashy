@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme, setTheme, changeTheme, Theme } from "../stores/theme.store";
+  import { theme, setTheme, changeTheme, Theme } from '../stores/theme.store';
   $: $theme, changeTheme($theme);
 
   function toggleTheme() {
@@ -8,7 +8,7 @@
     } else {
       setTheme(Theme.dark);
     }
-  }
+  };
 </script>
 
 <label class="swap swap-rotate">

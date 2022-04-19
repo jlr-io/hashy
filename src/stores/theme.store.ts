@@ -1,12 +1,9 @@
-import { derived, writable } from "svelte/store";
-
-
-// TODO: create custom themes.
+import { writable } from "svelte/store";
 
 export enum Theme {
-  light = 'garden',
-  dark = 'night'
-}
+  light = 'light',
+  dark = 'dark'
+};
 
 const dataTheme = document.createAttribute('data-theme');
 const html = document.getElementById('globalhtml');
@@ -17,11 +14,4 @@ export const setTheme = (val: Theme) => theme.set(val);
 export function changeTheme(theme: Theme) {
   dataTheme.value = theme
   html.setAttributeNode(dataTheme);
-}
-
-export const appTheme = derived(
-  theme,
-  $theme => { return `${$theme}!!`
-    
-  }
-)
+};

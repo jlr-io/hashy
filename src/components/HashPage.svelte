@@ -43,7 +43,7 @@
         value: LOADING,
       };
       hashStore.updateMap(hash);
-      hash = await invoke<Hash>("hash_file2", {
+      hash = await invoke<Hash>("hash_file", {
         path: $filePath,
         algo: algo,
       });
@@ -57,18 +57,13 @@
     isAnyLoading: boolean,
   ): boolean {
     return !hasFilePath || !hasAlgorithms || isAnyLoading;
-  }
+  };
 
   function disableClearButton(hasFilePath: boolean, isAnyLoading: boolean): boolean {
     return !hasFilePath || isAnyLoading;
-  }
+  };
 
   let target;
-
-  // make a store value?
-  // let isAnyLoading;
-  // $: $hashStore, isAnyLoading = [...$hashStore.values()].includes(LOADING);
-
 </script>
 
 <!-- info row -->

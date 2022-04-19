@@ -14,7 +14,7 @@
     buttonState = ButtonState.PASTED
     setTimeout(() => buttonState = ButtonState.PASTE, 1250);
     target = await clipboard.readText();
-  }
+  };
   let buttonState = ButtonState.PASTE;
 
   export let target: string = '';

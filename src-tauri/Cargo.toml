@@ -36,9 +36,7 @@ groestl = "0.10.1"
 gost94 = "0.10.1"
 fsb = "0.1.1"
 
-state = "0.5.2"
 chrono = "0.4"
-# lazy_static = "1.4.0"
 
 [features]
 # by default Tauri runs in production mode

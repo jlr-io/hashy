@@ -16,11 +16,11 @@
 
   function onCompute() {
     dispatch('compute');
-  }
+  };
 
   function onBrowse() {
     dispatch('browse');
-  }
+  };
 </script>
 
 <div class="tooltip align-top" data-tip="Algorithms">
@@ -33,7 +33,7 @@
 
 <div class="tooltip align-top" data-tip="Browse">
   <button
-    class="hashy-button btn-circle shadow-lg"
+    class="btn btn-lg mx-1 btn-circle shadow-lg"
     disabled={isLoading}
     on:click={onBrowse}
   >
@@ -43,7 +43,7 @@
 
 <div class="tooltip align-top" data-tip="Compute">
   <button
-    class="hashy-button btn-circle shadow-lg"
+    class="btn btn-lg mx-1  btn-circle shadow-lg"
     class:loading={isLoading}
     disabled={disableButton}
     on:click={onCompute}
