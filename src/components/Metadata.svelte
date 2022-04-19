@@ -1,8 +1,8 @@
 <script lang="ts">
   import Icon from "svelte-awesome";
   import { close } from "svelte-awesome/icons";
-  import { fade, blur } from 'svelte/transition';
-  import type { FileMetadata } from "../../../models/file.model";
+  import { fade } from 'svelte/transition';
+  import type { FileMetadata } from "../models/file.model";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
@@ -12,7 +12,7 @@
 
   function clear() {
     dispatch("clear");
-  }
+  };
 </script>
 
 <div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "svelte-awesome";
   import { close, list } from "svelte-awesome/icons";
-
+  
   export let algorithms: string[];
   export let selectedAlgorithms: string[];
   export let isLoading: boolean;

@@ -5,6 +5,4 @@ export interface Hash {
 
 export const LOADING = 'loading';
 
-export type Hashes = Hash[];
-
-export type MapType = Map<string, string>;
+// export type Hashes = Hash[];

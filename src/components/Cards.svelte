@@ -5,7 +5,7 @@
   import { clipboard } from "@tauri-apps/api";
   import Icon from "svelte-awesome";
   import { spinner, check, copy, thumbsUp } from "svelte-awesome/icons";
-  import { LOADING } from "../../../models/hash.models";
+  import { LOADING } from "../models/hash.models";
 
   export let algorithms: string[];
   export let map: Map<string, string>;
@@ -14,17 +14,17 @@
   enum ButtonState {
     COPY = "Copy",
     COPIED = "Copied",
-  }
+  };
 
   let buttonStates = new Map<string, ButtonState>();
 
   function isLoading(value: string): boolean {
     return value === LOADING;
-  }
+  };
 
   function isTarget(hash: string, target: string): boolean {
     return hash && hash.toLowerCase() === target.toLowerCase();
-  }
+  };
 
   const isCopy = (algo: string, state: Map<string, ButtonState>) => 
     getButtonState(algo, state) === ButtonState.COPY;
@@ -43,11 +43,11 @@
     
     // needed for svelte change detection.
     buttonStates = buttonStates;
-  }
+  };
 
   function getButtonState(algo: string, state: Map<string, ButtonState>): string {
     return state.get(algo) ?? ButtonState.COPY;
-  }
+  };
 
 </script>
 

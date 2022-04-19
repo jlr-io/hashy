@@ -59,7 +59,6 @@ dependencies = [
  "sha3",
  "shabal",
  "sm3",
- "state",
  "streebog",
  "tauri",
  "tauri-build",

@@ -6,10 +6,8 @@ export interface FileMetadata {
   file_type: String,
   size: String,
   last_modified: String,
-}
+};
 
-// work with only one file for now.
 export const dialogOptions: OpenDialogOptions = {
   title: 'Select Files to Hash',
-  // multiple: true
-}
+};
