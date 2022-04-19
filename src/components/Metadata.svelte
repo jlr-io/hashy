@@ -56,7 +56,7 @@
     <div in:fade="{{duration: 750}}" class="stats shadow-md bg-base-300 max-w-72">
       <div class="stat">
         <p class="text-lg text-center">
-          Select or Drag a File
+          Press Browse or Drag File
         </p>
       </div>
     </div>

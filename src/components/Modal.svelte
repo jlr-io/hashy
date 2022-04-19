@@ -22,7 +22,7 @@
         <div class="mb-1">
           <input
             type="checkbox"
-            class="checkbox checkbox-primary align-middle"
+            class="checkbox checkbox-neutral align-middle"
             bind:group={selectedAlgorithms}
             name={algo}
             value={algo}

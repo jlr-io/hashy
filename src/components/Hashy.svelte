@@ -69,43 +69,36 @@
   let target;
 </script>
 
-<!-- info row -->
-<div class="flex flex-wrap container mx-auto mb-2">
-  <!-- left half -->
-  <div class="flex flex-wrap justify-center items-center max-h-20 md:h-32 md:max-h-32 mt-6 mb-4 md:mt-0 md:mb-0 w-full md:w-1/2">
-    <div class="flex">
-      <!-- {#if $hasFilePath} -->
-        <div in:blur="{{duration: 500}}" class="mt-4">
-          <Metadata 
-            hasFilePath={$hasFilePath}
-            disableButton={disableClearButton($hasFilePath, $isAnyLoading)}
-            metadata={$fileMetadata} 
-            on:clear={onClear}/>
-        </div>
+<div class="flex flex-wrap container mx-auto md:h-28 md:max-h-28">
+  <div class="flex justify-center w-full md:w-1/2 mt-1 items-center">
+    <div in:blur="{{duration: 500}}">
+      <Metadata 
+        hasFilePath={$hasFilePath}
+        disableButton={disableClearButton($hasFilePath, $isAnyLoading)}
+        metadata={$fileMetadata} 
+        on:clear={onClear}/>
     </div>
   </div>
 
-  <!-- right half -->
-  <div class="flex flex-wrap md:justify-center items-center md:items-start max-h-20 w-full md:w-1/2 md:h-32 md:max-h-32">
+  <div class="flex justify-center w-full md:w-1/2 mt-1 items-center ">
+    <Buttons 
+      {algorithms}
+      bind:selectedAlgorithms={$algorithmStore}
+      isLoading={$isAnyLoading} 
+      disableButton={disableComputeButton($hasFilePath, $hasAlgorithms, $isAnyLoading)}
+      on:browse={onBrowse}
+      on:compute={onCompute}
+    />
+  </div>
 
-    <div class="w-full lg:w-4/6 text-center">
-      <Buttons 
-        {algorithms}
-        bind:selectedAlgorithms={$algorithmStore}
-        isLoading={$isAnyLoading} 
-        disableButton={disableComputeButton($hasFilePath, $hasAlgorithms, $isAnyLoading)}
-        on:browse={onBrowse}
-        on:compute={onCompute}
-      />
-    </div>
+</div>
 
-    <div class="hidden md:inline-flex w-11/12 lg:w-full text-center mt-2">
-      <Input bind:target/>
-    </div>
+<div class="hidden md:flex justify-center container mx-auto mb-2">
+  <div class="w-11/12 text-center mt-2">
+    <Input bind:target/>
   </div>
 </div>
 
-<!-- hash row -->
 <div class="flex mb-4">
     <Cards 
       algorithms={$algorithmStore}
