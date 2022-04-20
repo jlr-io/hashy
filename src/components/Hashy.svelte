@@ -69,8 +69,8 @@
   let target;
 </script>
 
-<div class="flex flex-wrap container mx-auto md:h-28 md:max-h-28">
-  <div class="flex justify-center w-full md:w-1/2 mt-1 items-center">
+<div class="flex flex-wrap container mx-auto mb-1 md:h-28 md:max-h-28">
+  <div class="flex justify-center w-full md:w-1/2 mt-2 items-center">
     <div in:blur="{{duration: 500}}">
       <Metadata 
         hasFilePath={$hasFilePath}
@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <div class="flex justify-center w-full md:w-1/2 mt-1 items-center ">
+  <div class="flex justify-center w-full md:w-1/2 mt-2 items-center ">
     <Buttons 
       {algorithms}
       bind:selectedAlgorithms={$algorithmStore}
